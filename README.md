@@ -21,10 +21,16 @@ Para começar a programar em R, precisamos primeiro instalar o conteúdo dessa l
 
 BIBLIOGRAFIA:
 
-[1] Materiais das aulas que se encontra no E-Class; \n
-[2] Materiais que se encontram presente no GitHub; \n
-[3] Site oficial da linguagem R, https://cran.rstudio.com/; \n
-[4] Site oficial do RStudio, https://rstudio.com/products/rstudio/download/#download; \n
-[5] Introdução à Programação em R, LUIZ TORGO; https://cran.r-project.org/doc/contrib/Torgo-ProgrammingIntro.pdf; \n
-[6] Curso-R, http://material.curso-r.com/rbase/; \n
-[7] Tutorial de Harvard sobre ggplot2 em R: https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html; \n
+[1] Materiais das aulas que se encontra no E-Class; 
+
+[2] Materiais que se encontram presente no GitHub;
+
+[3] Site oficial da linguagem R, https://cran.rstudio.com/;
+
+[4] Site oficial do RStudio, https://rstudio.com/products/rstudio/download/#download;
+
+[5] Introdução à Programação em R, LUIZ TORGO; https://cran.r-project.org/doc/contrib/Torgo-ProgrammingIntro.pdf;
+
+[6] Curso-R, http://material.curso-r.com/rbase/;
+
+[7] Tutorial de Harvard sobre ggplot2 em R: https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html;
