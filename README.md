@@ -22,6 +22,10 @@ Antes de começarmos a trabalhar com o pacote de gráficos do R, devemos primeir
 2. Para quem possui alguma experiência em programação, recomendo a leitura do seguinte tutorial: [6]. Teste todos os comandos que este menciona no RStudio e explore o ambiente. 
 3. Após o conhecimento prévio da linguagem e de suas sintaxes e funções, prossiga para o tutorial de Harvard [7].
 
+## ESTATÍSTICA BÁSICA:
+
+Todo o conteúdo de estatística cobrado se encontra no livro [8]. Futuramente coloco mais referências.
+
 ## BIBLIOGRAFIA:
 
 [1] Materiais das aulas que se encontra no E-Class; 
@@ -37,3 +41,5 @@ Antes de começarmos a trabalhar com o pacote de gráficos do R, devemos primeir
 [6] Curso-R, http://material.curso-r.com/rbase/;
 
 [7] Tutorial de Harvard sobre ggplot2 em R: https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html;
+
+[8] Estatística Básica - Bussab e Morettin (2017), 9º edição;
