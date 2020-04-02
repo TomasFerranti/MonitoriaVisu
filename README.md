@@ -20,11 +20,12 @@ Antes de começarmos a trabalhar com o pacote de gráficos do R, devemos primeir
 
 1. Caso você não tenha nenhuma noção de programação recomendo a leitura do livro [5];
 2. Para quem possui alguma experiência em programação, recomendo a leitura do seguinte tutorial: [6]. Teste todos os comandos que este menciona no RStudio e explore o ambiente. 
-3. Após o conhecimento prévio da linguagem e de suas sintaxes e funções, prossiga para o tutorial de Harvard [7].
+3. Um outro tutorial interessante se encontra em [10].
+4. Após o conhecimento prévio da linguagem e de suas sintaxes e funções, prossiga para o tutorial de Harvard [7].
 
 - Usando RMarkdown:
 
-O RMarkdown não é nada mais nada menos que apenas um arquivo que juntar scripts organizadamente, de modo a criar um arquivo final bonito. Para aprender como documentar e criar um arquivo .rmd utilize a cheatsheet do próprio criador, que se encontra em [9].
+O RMarkdown não é nada mais nada menos que apenas um arquivo que junta os scripts organizadamente, de modo a criar um arquivo final bonito. Para aprender como documentar e criar um arquivo .rmd utilize a cheatsheet do próprio criador, que se encontra em [9].
 
 ## ESTATÍSTICA BÁSICA:
 
@@ -49,3 +50,5 @@ Todo o conteúdo de estatística cobrado se encontra no livro [8]. Futuramente c
 [8] Estatística Básica - Bussab e Morettin (2017), 9º edição;
 
 [9] Cheatsheet do RMarkdown: https://rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf;
+
+[10] Curso de R presente no GitHub do Ramnath: http://curso-r.github.io/;
