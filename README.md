@@ -25,7 +25,11 @@ Antes de começarmos a trabalhar com o pacote de gráficos do R, devemos primeir
 
 - Usando RMarkdown:
 
-O RMarkdown não é nada mais nada menos que apenas um arquivo que junta os scripts organizadamente, de modo a criar um arquivo final bonito. Para aprender como documentar e criar um arquivo .rmd utilize a cheatsheet do próprio criador, que se encontra em [9].
+O RMarkdown não é nada mais nada menos que apenas um arquivo que junta os scripts organizadamente, de modo a criar um arquivo final bonito. 
+
+Para utilizá-lo, instale o pacote com **install.packages("rmarkdown")** e carregue com **library("rmarkdown")**. Depois disso, reinicie o RStudio e crie um novo arquivo clicando no botão em cima esquerda em File -> New -> RMarkdown file.
+
+Para aprender como editar esse arquivo .rmd utilize a cheatsheet do próprio criador, que se encontra em [9].
 
 ## ESTATÍSTICA BÁSICA:
 
