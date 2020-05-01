@@ -1,0 +1,190 @@
+---
+title: "Monitoria_30_04"
+author: "Tomás Ferranti"
+date: "30/04/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## Problema do site Atirei o Pau no Gráfico
+
+http://www.atireiopaunografico.com.br/2014/09/juntando-graficos-de-barras.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+dadosBancos1 <- data.frame(bancos = c("Caixa","Banco do Brasil","Itaú","Bradesco"),cc = c(12,6,8,14),outros = c(11,4,8,9),pessoal = c(15,2,4,5),veiculos=c(4.2,0.5,3,1.7),consignado=c(3.9,0.4,0.5,0.6),habitacao=c(0.6,0,0.3,0.3))
+dadosBancos1
+```
+
+```{r}
+ggplot(dadosBancos1,aes(x=bancos,y=cc)) + geom_histogram(stat="identity")
+```
+
+```{r}
+ggplot(dadosBancos1,aes(x=bancos,y=cc,fill=bancos)) + geom_histogram(stat="identity")
+```
+
+```{r}
+ggplot(dadosBancos1,aes(x=bancos,y=cc,fill=bancos)) + geom_histogram(stat="identity") + coord_flip()
+```
+
+```{r}
+?facet_grid
+```
+
+```{r}
+ggplot(dadosBancos1,aes(x=bancos,y=cc,fill=bancos)) + geom_histogram(stat="identity") + coord_flip() + facet_grid(~outros)
+```
+
+```{r}
+dadosBancos1
+```
+
+
+```{r}
+library(reshape)
+melt(dadosBancos1)
+```
+
+```{r}
+dadosBancos2 <- melt(dadosBancos1)
+colnames(dadosBancos2) <- c("bancos","produtos","valores")
+dadosBancos2
+```
+```{r}
+ggplot(dadosBancos2,aes(x=produtos,y=valores,fill=bancos)) + 
+  geom_histogram(stat='identity') +
+  coord_flip() + facet_grid(~bancos) + 
+  theme_classic() + 
+  geom_text(aes(label=valores),hjust=-0.01) +
+  theme(axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank(),axis.title.y=element_blank(),panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    legend.position = "none") 
+```
+
+## Problema de Harvard
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+dat <- read_csv("dataSets/EconomistData.csv")
+dat
+```
+
+```{r}
+pc1 <- ggplot(dat, aes(x = CPI, y = HDI, color = Region))
+pc1 + geom_point()
+```
+
+```{r}
+pc2 <- pc1 +
+  geom_smooth(mapping = aes(linetype = "r2"),
+              method = "lm",
+              formula = y ~ x + log(x), se = FALSE,
+              color = "red")
+pc2 + geom_point()
+```
+
+```{r}
+pc2 +
+  geom_point(shape = 1, size = 4)
+```
+
+```{r}
+pc3 <- pc2 + geom_point(shape = 1, size = 2.5, stroke = 1.25)
+pc3
+```
+
+```{r}
+pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
+                   "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
+                   "India", "Italy", "China", "South Africa", "Spane",
+                   "Botswana", "Cape Verde", "Bhutan", "Rwanda", "France",
+                   "United States", "Germany", "Britain", "Barbados", "Norway", "Japan",
+                   "New Zealand", "Singapore")
+pc4 <- pc3 +
+  geom_text(aes(label = Country),
+            color = "gray20",
+            data = filter(dat, Country %in% pointsToLabel))
+pc4
+```
+
+```{r}
+library("ggrepel")
+(pc4 <- pc3 +
+   geom_text_repel(aes(label = Country),
+                   color = "gray20",
+                   data = filter(dat, Country %in% pointsToLabel),
+                   force = 10))
+```
+
+```{r}
+dat$Region <- factor(dat$Region,
+                     levels = c("EU W. Europe",
+                                "Americas",
+                                "Asia Pacific",
+                                "East EU Cemt Asia",
+                                "MENA",
+                                "SSA"),
+                     labels = c("OECD",
+                                "Americas",
+                                "Asia &\nOceania",
+                                "Central &\nEastern Europe",
+                                "Middle East &\nnorth Africa",
+                                "Sub-Saharan\nAfrica"))
+pc4$data <- dat
+pc4
+```
+
+```{r}
+library(grid)
+(pc5 <- pc4 +
+  scale_x_continuous(name = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+                     limits = c(.9, 10.5),
+                     breaks = 1:10) +
+  scale_y_continuous(name = "Human Development Index, 2011 (1=Best)",
+                     limits = c(0.2, 1.0),
+                     breaks = seq(0.2, 1.0, by = 0.1)) +
+  scale_color_manual(name = "",
+                     values = c("#24576D",
+                                "#099DD7",
+                                "#28AADC",
+                                "#248E84",
+                                "#F2583F",
+                                "#96503F")) +
+  ggtitle("Corruption and Human development") + theme_classic())
+```
+

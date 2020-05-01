@@ -1,0 +1,174 @@
+---
+title: "Teste_A1"
+author: "Tomás Ferranti"
+date: "16 April 2020"
+output: html_document
+---
+
+## Problema 1
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+1. Prepare os dados do problema para serem trabalhados em R; descreva a qua estrategia de preparacao dos dados.
+
+Usando o comando *read.csv* especificando o *encoding*, temos nossos dados no R.
+
+```{r}
+data.1a <- read.csv(file = 'problema1.csv', encoding = "UTF-8", header=FALSE)
+colnames(data.1a) <- c("Paciente","Sexo","Idade","TamanhoDoCistoCm","LocalizacaoDoCisto")
+data.1a
+```
+
+
+2. Construa uma tabela e um gráfico de distribuição de freqüências para a localização do cisto no pâncreas dos pacientes;
+
+```{r}
+data.1b <- table(data.1a$LocalizacaoDoCisto)
+data.1b
+```
+
+```{r}
+ggplot(data.frame(data.1b),aes(x=Var1,y=Freq)) + geom_bar(stat="identity",fill="steelblue") + xlab("Localização") + ylab("Quantidade de Observações") + theme_minimal()
+```
+
+
+3. Construa uma tabela e um gráfico de distribuição de freqüências conjuntas para as variáveis sexo e localização do cisto no
+pâncreas. Com base na tabela e gráfico obtidos, você suspeita que exista relação entre o sexo e a localização do cisto?
+
+```{r}
+data.1c <- table(data.1a$Sexo,data.1a$LocalizacaoDoCisto)
+data.1c
+```
+
+```{r}
+data.1cDF <- data.frame(data.1c)
+ggplot(data.1cDF, aes(x=Var2, y=Freq, fill=Var1)) + geom_bar(stat="identity", position = "dodge") + theme_minimal() + xlab("Localização") + ylab("Frequência") + labs(fill = "Sexo")
+```
+
+
+```{r, warning=FALSE}
+x2.1c <- chisq.test(data.1c[1:2,1:4])$statistic
+C.1c <- sqrt(x2.1c/(x2.1c+sum(data.1c)))
+names(C.1c) <- "C"
+C.1c
+```
+
+Devido ao alto valor de $C$ ($0.47$), suspeito que exista relação entre o sexo e a localização do cisto.
+
+4. Construa uma tabela e um gráfico de distribuição de freqüências para os tamanhos dos cistos;
+
+```{r}
+data.1d <- table(cut(data.1a$TamanhoDoCistoCm,breaks=8))
+data.1d
+```
+
+```{r}
+ggplot(data.1a,aes(x=TamanhoDoCistoCm)) + geom_histogram(breaks=c(0.988,2.5,4,5.5,5.7,7,8.5,10,11.5,13),fill="steelblue") +theme_minimal()
+```
+
+
+
+5. Produza os graficos *boxplot* dos tamanhos dos cistos segundo o sexo dos pacientes e suas localizações no pâncreas. Interprete os gráficos apresentados.
+
+```{r}
+ggplot(data.1a,aes(x=Sexo,y=TamanhoDoCistoCm)) + geom_boxplot(fill="steelblue") + theme_minimal()
+```
+
+Podemos perceber pelo primeiro *boxplot* que pessoas do sexo feminimo possuem um cisto de tamanho maior.
+
+```{r}
+ggplot(data.1a,aes(x=LocalizacaoDoCisto,y=TamanhoDoCistoCm)) + geom_boxplot(fill="steelblue") + theme_minimal()
+```
+
+Podemos perceber pelo segundo *boxplot* que cistos no corpo do pâncreas possuem um tamanho maior enquanto que na cabeça do pâncreas possuem um tamanho menor.
+
+
+6.  Construa um gráfico que permita avaliar a relação entre a idade do paciente e o tamanho do cisto. Comente o resultado.
+
+```{r , warning=FALSE}
+ggplot(data.1a,aes(x=Idade,y=TamanhoDoCistoCm)) + geom_point(fill="steelblue") + geom_smooth() + theme_minimal()
+```
+
+Podemos perceber pelo gráfico que, para estes dados, quanto mais velha a pessoa, menor é o tamanho dos cistos.
+
+7. Calcule as medidas de posição e dispersão estudadas para os tamanhos dos cistos. Depois, calcule-as novamente, para cada sexo.
+Você suspeita que exista relação entre o tamanho dos cistos e o sexo dos pacientes?
+
+```{r}
+data.1g.1 <- data.1a$TamanhoDoCistoCm
+data.1g.2 <- data.1a[data.1a$Sexo == "M",]$TamanhoDoCistoCm
+data.1g.3 <- data.1a[data.1a$Sexo == "F",]$TamanhoDoCistoCm
+data.1g <- matrix(nrow=3,ncol=5)
+colnames(data.1g) <- c("Média","Desvio Padrão","1º Quantil","2º Quantil","3º Quantil")
+rownames(data.1g) <- c("Gerais","Masc.","Fem.")
+
+data.1g[1,1] <- mean(data.1g.1)
+data.1g[1,2] <- ((length(data.1g.1)-1)/length(data.1g.1))^(1/2)*sd(data.1g.1)
+data.1g[1,3:5] <- quantile(data.1g.1,c(0.25,0.5,0.75))
+
+data.1g[2,1] <- mean(data.1g.2)
+data.1g[2,2] <- ((length(data.1g.2)-1)/length(data.1g.2))^(1/2)*sd(data.1g.2)
+data.1g[2,3:5] <- quantile(data.1g.2,c(0.25,0.5,0.75))
+
+data.1g[3,1] <- mean(data.1g.3)
+data.1g[3,2] <- ((length(data.1g.3)-1)/length(data.1g.3))^(1/2)*sd(data.1g.3)
+data.1g[3,3:5] <- quantile(data.1g.3,c(0.25,0.5,0.75))
+data.1g
+```
+
+Podemos ver que os valores femininos são muito maiores do que os masculinos através da média e dos quantis, com um desvio padrão parecido. Logo, existe uma relação.
+
+## Problema 2: Escolha_Carreira
+
+Foi realizada uma pesquisa junto aos alunos classificados no vestibular da UFRJ em 1993. A Tabela de contingência a seguir foi montada a partir dos dados que constavam em 810 questionários por amostragem.
+
+```{r}
+data.2 <- matrix(c(13,24,0,11,33,81,2,1,1,0,5,9,113,176,49,61,286,685,4,2,1,0,6,13,5,5,1,1,10,22,137,208,52,73,340,810),nrow=6,ncol=6)
+colnames(data.2) <- c("Mercado Trabalho","Prestígio","Aptidão Pessoal","BaixaConcPorVagas","PerpesctSalariais","Total")
+rownames(data.2) <- c("Biomédica","Exatas/Tecnologia","Arquit/ArtesGraf","Geo-Economica","Outras","Total")
+
+data.2
+```
+
+**(a)** Com base nessa tabela de contingência obtenha uma nova tabela com percentuais:
+
+* Promovendo eventualmente algumas fusões de linhas ou colunas de modo a garantir a confiabilidade do processo de extrapolação dos resultados da amostra para a população;
+
+As fusões realizadas foram a de juntar Arquit/ArtesGraf com Geo-Economica (Humanas), junção das colunas Mercado Trabalho, BaixaConcPorvagas e PerpesctSalariais em uma só (Mercado Trabalho) e junção de Prestígio e Aptidão Pessoal em uma só (Aptidão Pessoal). Segue a nova tabela abaixo:
+
+```{r}
+data.2a.1 <- data.2
+data.2a.1[3,] <- data.2a.1[3,]+data.2a.1[4,]
+data.2a.1 <- data.2a.1[c(1,2,3,5,6),]
+rownames(data.2a.1)[3] <- "Humanas"
+data.2a.2 <- data.2a.1[,c(1,3)]
+data.2a.2[,1] <- data.2a.2[,1] + data.2a.1[,4] + data.2a.1[,5]
+data.2a.2[,2] <- data.2a.2[,2] + data.2a.1[,2]
+data.2a.2 <- cbind(data.2a.2, Total = data.2a.2[,1] + data.2a.2[,2])
+data.2a.2
+```
+
+* Comparando as 5 áreas de opções de carreira em termos do perfil de motivações para as escolhas características de cada área.
+
+```{r}
+data.2b <- data.2a.2
+data.2b[,1] <- data.2b[,1]/data.2b[5,1]
+data.2b[,2] <- data.2b[,2]/data.2b[5,2]
+data.2b[,3] <- data.2b[,3]/data.2b[5,3]
+data.2b
+```
+
+
+**(b)** Extraia as conclusões cabíveis.
+
+```{r,warning=FALSE}
+x2.2b <- chisq.test(data.2a.2[1:4,1:2])$statistic
+C.2b <- sqrt(x2.2b/(x2.2b+data.2a.2[5,3]))
+names(C.2b) <- "C"
+C.2b
+```
+
+Dado que $C=0.0413$, temos que o grau de dependência entre as áreas é baixo. Portanto, para as áreas de Biomédica, Exatas/Tecnologia e Humanas, temos que o motivo de ingresso é relativamente o mesmo.

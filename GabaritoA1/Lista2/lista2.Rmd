@@ -1,0 +1,244 @@
+---
+title: "Lista 2 AED"
+author: "Tomás Ferranti"
+date: "07/04/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+load("dados.RData")
+library("ggplot2")
+library("reshape")
+library("readxl")
+library("ggpubr")
+```
+
+***
+
+Para a realização dessa lista, foram utilizados os pacotes "ggpubr", "readxl" e "ggplot2".
+
+# Capítulo 2
+
+## Questão 3
+
+**Para o Conjunto de Dados 1 (CD-Brasil), construa a distribuição de freqüências para as
+variáveis população urbana e densidade populacional.**
+
+```{r questao3}
+#População Urbana
+dadosPopUrb <- cd_brasil$pop_urbana
+dadosPopUrb <- dadosPopUrb[!is.na(dadosPopUrb)]
+print("Dados da população urbana:")
+table(cut(dadosPopUrb, breaks=8, dig.lab = 8))
+
+#Densidade Populacional
+dadosDensi <- cd_brasil$densidade
+dadosDensi <- dadosDensi[-c(10,29)]
+dadosDensi <- sub(",",".",dadosDensi)
+dadosDensi <- as.numeric(dadosDensi)
+print("Dados da densidade:")
+table(cut(dadosDensi, breaks=8, dig.lab = 5))
+```
+
+## Questão 8
+
+**Construa um histograma, um ramo-e-folhas e um gráfico de dispersão unidimensional
+para o conjunto de dados 2 (CD-Municípios).**
+
+ Histograma:
+```{r questao8pt1}
+ggplot(cd_municipios,aes(x=populacao)) + stat_bin(fill="steelblue",bins=30) + theme_minimal()
+```
+
+ Ramo-e-folhas:
+```{r questao8pt2}
+stem(cd_municipios$populacao)
+```
+
+ Dispersão unidimensional:
+```{r questao8pt3}
+ggplot(cd_municipios,aes(x=populacao)) + geom_point(fill="steelblue",y=0) + ylim(-1,1) + theme_minimal()
+```
+
+## Questão 20
+
+**Construa um ramo-e-folhas para a variável CO (monóxido de carbono) do conjunto de
+dados 4 (CD-Poluição).**
+
+```{r questao20}
+stem(cd_poluicao$co)
+```
+
+# Capítulo 3
+
+## Questão 18
+
+**Considere o CD-Municípios e tome somente os 15 maiores, relativamente à sua população. Calcule q(0.1), q(0.2), q1, q2, q3.**
+
+```{r questao18}
+dados = cd_municipios[1:15,]
+quantis = quantile(dados$populacao,probs = c(0.1,0.2,0.25,0.5,0.75))
+quantis
+```
+
+## Questão 42
+
+**Calcule o desvio absoluto mediano para as populações do CD-Brasil.**
+
+Considerando as populações totais, temos:
+```{r questao42}
+dadosPopTot <- cd_brasil$total
+dadosPopTot <- dadosPopTot[-c(10,29)]
+mediana <- median(dadosPopTot)
+dam <- median(abs(dadosPopTot-mediana))
+print(paste("O desvio absoluto mediano é",dam))
+```
+
+## Questão 43
+
+**Calcule as principais medidas de posição e dispersão (incluindo a média aparada e o
+dam) para:
+(a) variável CO no CD-Poluição;
+(b) salários de mecânicos, CD-Salários; e
+(c) variável preço, CD-Veículos.**
+
+
+```{r questao43}
+dadosItemA = cd_poluicao$co
+dadosItemA <- sort(dadosItemA)
+cd_salarios <- readxl::read_excel("Dados_EB.xls",sheet = "CD-Salarios", range = "C6:C35")
+dadosItemB = melt(cd_salarios)$value
+dadosItemB <- sort(dadosItemB)
+dadosItemC = cd_veiculos$preco
+dadosItemC <- sort(dadosItemC)
+aparacao = 0.10
+```
+
+Item (a):
+
+```{r questao43itemA1}
+data.43a <- summary(dadosItemA)
+data.43a <- c(data.43a,(((length(dadosItemA)-1)/length(dadosItemA))*var(dadosItemA))^(1/2))
+n1A = floor(length(dadosItemA)*aparacao/2)
+n2A = ceiling(length(dadosItemA)*(1-aparacao/2))
+data.43a <- c(data.43a,mean(dadosItemA[n1A:n2A]))
+data.43a <- c(data.43a,median(abs(dadosItemA-median(dadosItemA))))
+names(data.43a) <- c(names(data.43a)[names(data.43a)!=""],"Desvio Padrão","Média Aparada","DAM")
+data.43a
+```
+
+```{r questao43itemA2}
+data.43b <- summary(dadosItemB)
+data.43b <- c(data.43b,(((length(dadosItemB)-1)/length(dadosItemB))*var(dadosItemB))^(1/2))
+n1B = floor(length(dadosItemB)*aparacao/2)
+n2B = ceiling(length(dadosItemB)*(1-aparacao/2))
+data.43b <- c(data.43b,mean(dadosItemB[n1B:n2B]))
+data.43b <- c(data.43b,median(abs(dadosItemB-median(dadosItemB))))
+names(data.43b) <- c(names(data.43b)[names(data.43b)!=""],"Desvio Padrão","Média Aparada","DAM")
+data.43b
+```
+
+```{r questao43itemA3}
+data.43c <- summary(dadosItemC)
+data.43c <- c(data.43c,(((length(dadosItemC)-1)/length(dadosItemC))*var(dadosItemC))^(1/2))
+n1C = floor(length(dadosItemC)*aparacao/2)
+n2C = ceiling(length(dadosItemC)*(1-aparacao/2))
+data.43c <- c(data.43c,mean(dadosItemC[n1C:n2C]))
+data.43c <- c(data.43c,median(abs(dadosItemC-median(dadosItemC))))
+names(data.43c) <- c(names(data.43c)[names(data.43c)!=""],"Desvio Padrão","Média Aparada","DAM")
+data.43c
+```
+
+## Questão 44
+
+**Construa os histogramas, ramo-e-folhas e desenhos esquemáticos para as variáveis do
+problema anterior.**
+
+```{r questao44}
+histA <- ggplot(data.frame(dadosItemA),aes(x=dadosItemA)) + geom_histogram(fill="steelblue",stat='bin',binwidth = 1) + theme_minimal()
+histB <- ggplot(data.frame(dadosItemB),aes(x=dadosItemB)) + geom_histogram(fill="steelblue",stat='bin',binwidth = 6000) + theme_minimal()
+histC <- ggplot(data.frame(dadosItemC),aes(x=dadosItemC)) + geom_histogram(fill="steelblue",stat='bin',binwidth = 5000) + theme_minimal()
+figure <- ggarrange(histA, histB, histC,
+                    labels = c("A", "B", "C"),
+                    ncol = 2, nrow = 2)
+print(figure)
+```
+
+```{r}
+stem(dadosItemA)
+```
+
+```{r}
+stem(dadosItemB)
+```
+
+```{r}
+stem(dadosItemC)
+```
+
+## Questão 46
+
+**Para o CD-Temperaturas e para a variável temperatura de Ubatuba, obtenha um gráfico de
+quantis e um gráfico de simetria. Os dados são simétricos? Comente.**
+
+```{r questao46a}
+dados46 = cd_temperaturas$ubatuba
+dados46 <- sort(dados46)
+#Gráfico de quantis
+dadosPlot <- table(dados46)
+dadosPlot <- cumsum(dadosPlot)
+dadosPlot <- dadosPlot/dadosPlot[length(dadosPlot)]
+qi = as.numeric(dadosPlot)
+Xqi = as.numeric(names(dadosPlot))
+ggplot(data.frame(qi,Xqi),aes(x=qi,y=Xqi)) + geom_point(fill="steelblue") + theme_minimal()
+```
+
+
+```{r questao46b}
+#Gráfico de simetria
+u = vector()
+v = vector()
+n = length(dados46) #n par
+q2 = quantile(dados46,probs = 0.5)
+for(i in 1:(n/2)){
+  u[i] = q2 - dados46[n/2-i+1]
+  v[i] = dados46[n/2+i] - q2
+}
+x <- c(0:8)
+y <- x
+ggplot(data.frame(u,v),aes(x=u,y=v)) + geom_point(fill="steelblue") + geom_abline(slope=1,intercept=c(0,0)) + theme_minimal()
+#lines(x,y)
+```
+ 
+ Como podemos ver pelos dois gráficos os dados possuem um grau bem alto de simetria.
+ 
+***
+
+# Capítulo 4
+
+## Questão 37
+
+**Analise a população total do CD-Brasil, segundo as regiões geográficas.**
+
+```{r questao37}
+dados37 <- cd_brasil[!is.na(cd_brasil$total),]
+ggplot(dados37,aes(x=regiao,y=total)) + geom_boxplot() + scale_y_continuous(labels = scales::comma)
+```
+
+## Questão 39
+
+**Considere o CD-Poluição e as variáveis CO, temperatura e umidade. Faça gráficos de
+dispersão para pares de variáveis. Quais conclusões você pode obter?**
+
+```{r questao39}
+q39a <- ggplot(cd_poluicao,aes(x=co,y=temp)) + geom_point(fill="steelblue") + theme_minimal()
+q39b <- ggplot(cd_poluicao,aes(x=temp,y=umid)) + geom_point(fill="steelblue") + theme_minimal()
+q39c <- ggplot(cd_poluicao,aes(x=co,y=umid)) + geom_point(fill="steelblue") + theme_minimal()
+figure <- ggarrange(q39a, q39b, q39c,
+                    labels = c("CO x Temp", "Temp x Umid", "CO x Umid"),
+                    ncol = 2, nrow = 2)
+print(figure)
+```
+
+ Podemos concluir que em grande parte dos dados: quanto maior a temperatura maior a umidade; quanto menor a emissão de CO2 menos variação na umidade ocorre.
