@@ -35,6 +35,17 @@ Para aprender como editar esse arquivo .rmd utilize a cheatsheet do próprio cri
 
 Todo o conteúdo de estatística cobrado se encontra no livro [8]. Futuramente coloco mais referências.
 
+## NOTAS MONITORIA:
+
+- 07/05/2020:
+
+Segue algumas referências sobre as dicas citadas na monitoria com relação à questão 4:
+
+1. O comando **as.Date()** transforma a data contida no .csv para o formato data do R, de modo a criar continuidade nos gráficos;
+2. Transformar os dados de maneira a obter os valores do Brasil inteiro. Com isso, a **síntaxe do dplyr** (referência em [11]) serve para o trabalho;
+3. Para a criação de um gráfico com um eixo secundário y, há duas maneiras apresentadas em [12];
+4. A mudança de escala de linear para logarítmica pode ser feita de acordo com o tutorial: [13] para plotly, [14] para ggplot;
+
 ## BIBLIOGRAFIA:
 
 [1] Materiais das aulas que se encontra no E-Class; 
@@ -56,3 +67,11 @@ Todo o conteúdo de estatística cobrado se encontra no livro [8]. Futuramente c
 [9] Cheatsheet do RMarkdown: https://rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf;
 
 [10] Curso de R presente no GitHub do Ramnath: http://curso-r.github.io/;
+
+[11] Sintaxe do **dplyr**, https://stackoverflow.com/questions/32493398/sum-column-in-data-frame-based-on-another-column-in-r;
+
+[12] Plot com eixo secundário, https://stackoverflow.com/questions/3099219/ggplot-with-2-y-axes-on-each-side-and-different-scales;
+
+[13] Escala log em plotly, https://plotly.com/r/log-plot/;
+
+[14] Escala log em ggplot, https://www.datanovia.com/en/blog/ggplot-log-scale-transformation/;
