@@ -46,6 +46,22 @@ Segue algumas referências sobre as dicas citadas na monitoria com relação à 
 3. Para a criação de um gráfico com um eixo secundário y, há duas maneiras apresentadas em [12]. Outras referências se encontra em [15] e [16];
 4. A mudança de escala de linear para logarítmica pode ser feita de acordo com o tutorial: [13] para plotly, [14] para ggplot;
 
+## BASES DE DADOS PARA O TRABALHO FINAL:
+
+Segue abaixo alguns sites que possuem bases de dados ideais para o trabalho:
+
+1. https://www.kaggle.com/datasets possui vários datasets interessantes, entretanto alguns um pouco bagunçados. Na hora de fazer um browse pelo site, na parte de Sort by escolha Usability para filtrar somente os bem organizados;
+2. https://www.cesop.unicamp.br/por/banco_de_dados também possui diversos bancos de dados. Para baixá-los necessita estar cadastrado e logado no site. Não sei se estes são limpos ou não;
+
+Lembre-se que o foco do trabalho é a visualização. Não escolha uma base de dados que leve muito tempo para limpar e ficar propícia para o trabalho. Até dia 07/06 deve ser entregue um Briefing contendo os seguintes tópicos:
+
+- Nomes dos integrantes (pode-se fazer em dupla);
+- Base de dados;
+- Perguntas que deseja responder;
+- Inspiração para a escolha e trabalhos relacionados;
+
+A data de entrega do trabalho final ainda está a ser decidida.
+
 ## BIBLIOGRAFIA:
 
 [1] Materiais das aulas que se encontra no E-Class; 
