@@ -52,6 +52,7 @@ Segue abaixo alguns sites que possuem bases de dados ideais para o trabalho:
 
 1. https://www.kaggle.com/datasets possui vários datasets interessantes, entretanto alguns um pouco bagunçados. Na hora de fazer um browse pelo site, na parte de Sort by escolha Usability para filtrar somente os bem organizados;
 2. https://www.cesop.unicamp.br/por/banco_de_dados também possui diversos bancos de dados. Para baixá-los necessita estar cadastrado e logado no site. Não sei se estes são limpos ou não;
+3. https://www.ime.usp.br/~pam/EstBas.html contém os dados utilizados nos exercícios do livro do Bussab;
 
 Lembre-se que o foco do trabalho é a visualização. Não escolha uma base de dados que leve muito tempo para limpar e ficar propícia para o trabalho. Até dia 07/06 deve ser entregue um Briefing contendo os seguintes tópicos:
 
